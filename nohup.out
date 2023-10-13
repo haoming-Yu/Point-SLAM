@@ -1,0 +1,60 @@
+
+⭐️ INFO: The output folder is output/Replica/room0/20231013_194144
+⭐️ INFO: The GT, generated and residual depth/color images can be found under output/Replica/room0/20231013_194144/tracking_vis/ and output/Replica/room0/20231013_194144/mapping_vis/
+⭐️ INFO: The mesh can be found under output/Replica/room0/20231013_194144/mesh/
+⭐️ INFO: The checkpoint can be found under output/Replica/room0/20231013_194144/ckpt/
+wandb: Currently logged in as: xyz2haomingyu (haomingyu). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.15.12 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.9
+wandb: Run data is saved locally in /home/dh/haomingyu/pointSLAM/output/wandb/run-20231013_194206-kpqxwxtk
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run mapper_20231013_194144
+wandb: ⭐️ View project at https://wandb.ai/haomingyu/Point_SLAM_replica
+wandb: 🚀 View run at https://wandb.ai/haomingyu/Point_SLAM_replica/runs/kpqxwxtk
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: Currently logged in as: xyz2haomingyu (haomingyu). Use `wandb login --relogin` to force relogin
+wandb: Network error (TransientError), entering retry loop.
+wandb: Network error (TransientError), entering retry loop.
+wandb: wandb version 0.15.12 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.9
+wandb: Run data is saved locally in /home/dh/haomingyu/pointSLAM/output/wandb/run-20231013_194403-vx8tlhyi
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run tracker_20231013_194144
+wandb: ⭐️ View project at https://wandb.ai/haomingyu/Point_SLAM_replica
+wandb: 🚀 View run at https://wandb.ai/haomingyu/Point_SLAM_replica/runs/vx8tlhyi
+wandb: Network error (TransientError), entering retry loop.
