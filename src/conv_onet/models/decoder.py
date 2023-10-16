@@ -42,6 +42,8 @@ class DenseLayer(nn.Linear):
         self.activation = activation
         super().__init__(in_dim, out_dim, *args, **kwargs)
 
+    # Here the reset_parameter function will overwrite the version of nn.Linear base class
+    # which means, the nn.Linear's reset_parameter function will not be called.
     def reset_parameters(self) -> None:
         torch.nn.init.xavier_uniform_(
             self.weight, gain=torch.nn.init.calculate_gain(self.activation))
@@ -133,6 +135,8 @@ class MLP_geometry(nn.Module):
             p), 'point locations for get_feature_at_pos should be tensor.'
         device = p.device
         p = p.reshape(-1, 3)
+        # Here we use detach() to avoid backpropagation in the AD computational graph
+        # while computing neighboring information.
         D, I, neighbor_num = npc.find_neighbors_faiss(p.detach().clone(),
                                                       step='query',
                                                       dynamic_radius=dynamic_r_query)
@@ -183,7 +187,7 @@ class MLP_geometry(nn.Module):
             pts_num (int, optional): sampled pts num along each ray. Defaults to N_surface.
             is_tracker (bool, optional): whether called by tracker. Defaults to False.
             cloud_pos (tensor, optional): point cloud position. 
-            pts_views_d (tensor): viweing directions
+            pts_views_d (tensor): viewing directions
             dynamic_r_query (tensor, optional): if enabled dynamic radius, query radius for every pixel will be different.
 
         Returns:
@@ -367,16 +371,25 @@ class MLP_color(nn.Module):
         weights[D > radius_query_bound] = 0.
         weights = F.normalize(weights, p=1, dim=1).unsqueeze(-1)
 
+        # As for color, use relative position to encode the positional information
+        # This can be originated from point-nerf.
+        # Using this relative position encoding, we can make the network invariant to point translation for better generalization
+        
         # use fixed num of nearest nn
         # select neighbors within range, then interpolate feature by inverse distance weighting
         neighbor_feats = npc_feats[I]             # (n_points, nn_num=8, c_dim)
         if self.encode_rel_pos_in_col:
             neighbor_pos = cloud_pos[I]  # (N,nn_num,3)
             neighbor_rel_pos = neighbor_pos - p[:, None, :]
+            # Here the embedder_rel_pos is an instance of GaussianFourierFeatureTransform
+            # And GaussianFourierFeatureTransform is a subclass of torch.nn.Module
+            # Any subclass of torch.nn.Module's instance can be called as a function
+            # And the __call__ function of torch.nn.Module will call the forward function, 
+            # And the argument of forward is just the argument input in the instance calling when calling the instance as a function
             embedding_rel_pos = self.embedder_rel_pos(
-                neighbor_rel_pos.reshape(-1, 3))             # (N, nn_num, 40)
+                neighbor_rel_pos.reshape(-1, 3))             # (N, nn_num, 20)
             neighbor_feats = torch.cat([embedding_rel_pos.reshape(neighbor_pos.shape[0], -1, self.embedder_rel_pos.mapping_size*2),
-                                        neighbor_feats], dim=-1)  # (N, nn_num, 40+c_dim)
+                                        neighbor_feats], dim=-1)  # (N, nn_num, 20+c_dim)
             neighbor_feats = self.mlp_col_neighbor(
                 neighbor_feats)                  # (N, nn_num, c_dim)
 
@@ -432,6 +445,9 @@ class MLP_color(nn.Module):
         if self.encode_exposure:
             if exposure_feat is not None:
                 affine_tensor = self.mlp_exposure(exposure_feat)
+                # Here we need to notice that the affine_tensor's rotation matrix may not just rotate
+                # but also scale the color feature vector. But this is a learnable parameter.
+                # The author didn't verify this trait but directly use it.
                 rot, trans = affine_tensor[:9].reshape(
                     3, 3), affine_tensor[-3:]
                 out = torch.matmul(out, rot) + trans
