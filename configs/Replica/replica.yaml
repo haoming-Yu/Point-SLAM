@@ -17,5 +17,5 @@ mapping:
   iters: 300
   lazy_start: 20
 rendering:
-  sample_near_pcl: False
+  sample_near_pcl: True
   eval_img: True
